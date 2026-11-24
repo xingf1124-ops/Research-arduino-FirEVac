@@ -114,7 +114,34 @@ void trackEvacRoute() {
     turnRight();
   }
 }
+void stopRobot() {
+  digitalWrite(LeftIN1, LOW);
+  digitalWrite(LeftIN2, LOW);
+  digitalWrite(RightIN3, LOW);
+  digitalWrite(RightIN4, LOW);
+}
 
+void detectFire() {
+  int flameValue = digitalRead(Flame_DO);
+
+  if (flameValue == LOW) {
+    Serial.println("Fire detected!");
+
+    // Stop the robot
+    stopRobot();
+
+    // Turn on water pump
+    digitalWrite(RelayIN, LOW);
+
+    delay(3000);
+
+    // Turn off water pump
+    digitalWrite(RelayIN, HIGH);
+  }
+  else {
+    Serial.println("No fire detected");
+  }
+}
 void loop() {
   // put your main code here, to run repeatedly:
 
